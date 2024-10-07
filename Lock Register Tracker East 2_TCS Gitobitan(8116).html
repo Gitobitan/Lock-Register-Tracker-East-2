@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lock Register Tracker East 2_TCS Gitobitan(8116)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: 'Cambria', serif;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], 
+        input[type="date"], 
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="time"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lock Register</h1>
+    
+    <form id="lockRegisterForm">
+        <div class="form-group">
+            <label for="tcCode">TC Code</label>
+            <input type="text" id="tcCode" name="tcCode" value="8116" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="tcName">TC Name</label>
+            <input type="text" id="tcName" name="tcName" value="TCS Gitobitan" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="assessmentDate">Assessment Date</label>
+            <input type="date" id="assessmentDate" name="assessmentDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="assessmentName">Assessment Name</label>
+            <input type="text" id="assessmentName" name="assessmentName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="assessmentShift">Assessment Shift</label>
+            <select id="assessmentShift" name="assessmentShift">
+                <option value="Shift 1">Shift 1</option>
+                <option value="Shift 2">Shift 2</option>
+                <option value="Shift 3">Shift 3</option>
+                <option value="Shift 4">Shift 4</option>
+                <option value="Shift 5">Shift 5</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="assessmentStartTiming">Assessment Start Timing</label>
+            <input type="time" id="assessmentStartTiming" name="assessmentStartTiming" required>
+        </div>
+
+        <div class="form-group">
+            <label for="assessmentEndTiming">Assessment End Timing</label>
+            <input type="time" id="assessmentEndTiming" name="assessmentEndTiming" required>
+        </div>
+
+        <div class="form-group">
+            <label for="assessmentFloor">Assessment Floor</label>
+            <select id="assessmentFloor" name="assessmentFloor">
+                <option value="Ground Floor">Ground Floor</option>
+                <option value="1st Floor">1st Floor</option>
+                <option value="2nd Floor">2nd Floor</option>
+                <option value="3rd Floor">3rd Floor</option>
+                <option value="4th Floor">4th Floor</option>
+                <option value="5th Floor">5th Floor</option>
+                <option value="6th Floor">6th Floor</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="assessmentLan">Assessment Lan #</label>
+            <select id="assessmentLan" name="assessmentLan">
+                <option value="Lan 1">Lan 1</option>
+                <option value="Lan 2">Lan 2</option>
+                <option value="Lan 3">Lan 3</option>
+                <option value="Lan 4">Lan 4</option>
+                <option value="Lan 5">Lan 5</option>
+                <option value="Lan 6">Lan 6</option>
+                <option value="Lan 7">Lan 7</option>
+                <option value="Lan 9">Lan 9</option>
+                <option value="Lan 10">Lan 10</option>
+                <option value="Lan 11">Lan 11</option>
+                <option value="Lan 12">Lan 12</option>
+                <option value="Lan 13">Lan 13</option>
+                <option value="Lan 14">Lan 14</option>
+                <option value="Lan 15">Lan 15</option>
+                <option value="Lan 16">Lan 16</option>
+                <option value="Lan 17">Lan 17</option>
+                <option value="Lan 19">Lan 19</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="assessmentLab">Assessment Lab #</label>
+            <select id="assessmentLab" name="assessmentLab">
+                <option value="Lab 1">Lab 1</option>
+                <option value="Lab 2">Lab 2</option>
+                <option value="Lab 3">Lab 3</option>
+                <option value="Lab 4">Lab 4</option>
+                <option value="Lab 5">Lab 5</option>
+                <option value="Lab 6">Lab 6</option>
+                <option value="Lab 7">Lab 7</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="systemCubicalNo">System Cubical No. #</label>
+            <input type="text" id="systemCubicalNo" name="systemCubicalNo" required>
+        </div>
+
+        <button type="button" onclick="generateExcel()">Generate Excel</button>
+    </form>
+
+    <script>
+        function generateExcel() {
+            // Get form data
+            const formData = {
+                TC_Code: document.getElementById('tcCode').value,
+                TC_Name: document.getElementById('tcName').value,
+                Assessment_Date: document.getElementById('assessmentDate').value,
+                Assessment_Name: document.getElementById('assessmentName').value,
+                Assessment_Shift: document.getElementById('assessmentShift').value,
+                Assessment_Start_Timing: document.getElementById('assessmentStartTiming').value,
+                Assessment_End_Timing: document.getElementById('assessmentEndTiming').value,
+                Assessment_Floor: document.getElementById('assessmentFloor').value,
+                Assessment_Lan: document.getElementById('assessmentLan').value,
+                Assessment_Lab: document.getElementById('assessmentLab').value,
+                System_Cubical_No: document.getElementById('systemCubicalNo').value,
+            };
+
+            // Create a new workbook and a worksheet
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet([formData]);
+
+            // Append the worksheet to the workbook
+            XLSX.utils.book_append_sheet(wb, ws, "Lock Register");
+
+            // Generate Excel file
+            XLSX.writeFile(wb, "Lock_Register_Tracker_East_2_TCS_Gitobitan_8116.xlsx");
+        }
+    </script>
+
+</body>
+</html>
